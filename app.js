@@ -46,7 +46,11 @@ mongoose.connection.on("connected", () => {
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "asm3-ecommerce-khoa.netlify.app",
+    ],
     credentials: true,
   })
 );
