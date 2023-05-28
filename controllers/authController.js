@@ -66,9 +66,13 @@ exports.postLogin = async (req, res, next) => {
 
     // Exclude password and role from user object, set access token as a cookie, and return user details
     const { password, role, ...others } = user._doc;
+
     res
       .cookie("access_token", accessToken, {
         httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        // other options
       })
       .status(200)
       .json({ message: "User login successfully", ...others, role });
