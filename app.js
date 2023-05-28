@@ -49,7 +49,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      "asm3-ecommerce-khoa.netlify.app",
+      "https://asm3-ecommerce-khoa.netlify.app/",
     ],
     credentials: true,
   })
