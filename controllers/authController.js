@@ -69,8 +69,8 @@ exports.postLogin = async (req, res, next) => {
 
     res
       .cookie("access_token", accessToken, {
-        httpOnly: true,
-        sameSite: "none",
+        // httpOnly: true,
+        sameSite: "lax",
         secure: true,
       })
       .status(200)
@@ -87,8 +87,8 @@ exports.postLogout = async (req, res, next) => {
     res
       .clearCookie("access_token", {
         path: "/",
-        httpOnly: true,
-        sameSite: "none",
+        // httpOnly: true,
+        sameSite: "lax",
         secure: true,
       })
       .status(200)
