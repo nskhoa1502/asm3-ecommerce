@@ -70,8 +70,8 @@ exports.postLogin = async (req, res, next) => {
     res
       .cookie("access_token", accessToken, {
         httpOnly: true,
-        sameSite: "none",
-        secure: true,
+        sameSite: "lax",
+        // secure: true,
         // other options
       })
       .status(200)
@@ -88,16 +88,7 @@ exports.postLogout = async (req, res, next) => {
     res
       .clearCookie("access_token", {
         path: "/",
-        domain: "asm3-ecommerce-khoa.netlify.app",
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      })
-      .clearCookie("access_token", {
-        path: "/",
-        domain: "asm3-adminecommerce-khoa.netlify.app",
-        httpOnly: true,
-        secure: true,
         sameSite: "none",
       })
       .status(200)
