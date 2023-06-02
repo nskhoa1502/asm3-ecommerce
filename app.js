@@ -53,7 +53,7 @@ app.use(
     credentials: true,
     // Add the following options
     sameSite: "none",
-    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+    methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD", "DELETE"],
     secure: true,
   })
 );

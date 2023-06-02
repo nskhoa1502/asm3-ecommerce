@@ -4,7 +4,7 @@ const { createError } = require("../helpers/error");
 // Middleware to verify the token
 const verifyToken = (req, res, next) => {
   const token = req.cookies.access_token;
-  // console.log(token);
+  console.log(token);
 
   // If no token is found, return an error
   if (!token) {
@@ -32,7 +32,8 @@ const verifySupport = (req, res, next) => {
 
     // Check if the user has the necessary role (support or admin)
     if (req.user.role !== "support" && req.user.role !== "admin") {
-      return next(createError(401, "You are not authenticated!"));
+      console.log(req.user.role);
+      return next(createError(401, "You are not authenticated! in Support"));
     }
 
     next();
@@ -48,7 +49,8 @@ const verifyAdmin = (req, res, next) => {
 
     // Check if the user has the necessary role (admin)
     if (req.user.role !== "admin") {
-      return next(createError(401, "You are not authenticated!"));
+      console.log(req.user.role);
+      return next(createError(401, "You are not authenticated! in Admin"));
     }
 
     next();
