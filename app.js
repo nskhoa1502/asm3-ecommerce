@@ -47,10 +47,13 @@ mongoose.connection.on("connected", () => {
 app.use(
   cors({
     origin: [
-      "https://asm3-ecommerce-khoa.netlify.app",
       "https://asm3-adminecommerce-khoa.netlify.app",
+      "https://asm3-ecommerce-khoa.netlify.app",
     ],
     credentials: true,
+    // Add the following options
+    sameSite: "none",
+    secure: true,
   })
 );
 
