@@ -84,9 +84,22 @@ exports.postLogin = async (req, res, next) => {
 // USER LOGOUT
 exports.postLogout = async (req, res, next) => {
   try {
-    // Clear the access_token cookie and return a success message
+    // Clear the access_token cookie for both domains and return a success message
     res
-      .clearCookie("access_token")
+      .clearCookie("access_token", {
+        path: "/",
+        domain: "asm3-ecommerce-khoa.netlify.app",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .clearCookie("access_token", {
+        path: "/",
+        domain: "asm3-adminecommerce-khoa.netlify.app",
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .status(200)
       .json({ message: "User logged out successfully" });
   } catch (err) {
