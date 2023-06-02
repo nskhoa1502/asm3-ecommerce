@@ -43,19 +43,25 @@ mongoose.connection.on("connected", () => {
   console.log("mongoDB reconnected");
 });
 
-// Enable CORS for all routes
-app.use(
-  cors({
-    origin: [
-      "https://asm3-adminecommerce-khoa.netlify.app",
-      "https://asm3-ecommerce-khoa.netlify.app",
-    ],
-    credentials: true,
-    // Add the following options
-    sameSite: "none",
-    secure: true,
-  })
-);
+// Enable CORS for both domains
+const cors1 = {
+  origin: "https://asm3-adminecommerce-khoa.netlify.app",
+  credentials: true,
+  // Add the following options
+  sameSite: "none",
+  secure: true,
+};
+
+const cors2 = {
+  origin: "https://asm3-ecommerce-khoa.netlify.app",
+  credentials: true,
+  // Add the following options
+  sameSite: "none",
+  secure: true,
+};
+
+app.use(cors(cors1));
+app.use(cors(cors2));
 
 //middlewares
 app.use(express.json());
