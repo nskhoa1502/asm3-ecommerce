@@ -19,6 +19,7 @@ const verifyToken = (req, res, next) => {
 
     // If the token is valid, attach the user to the request object and proceed to the next middleware/route handler
     req.user = user;
+    console.log(`O verifytoken ${req.user}`);
     next();
   });
 };
@@ -32,7 +33,7 @@ const verifySupport = (req, res, next) => {
 
     // Check if the user has the necessary role (support or admin)
     if (req.user.role !== "support" && req.user.role !== "admin") {
-      console.log(req.user.role);
+      console.log(`O verify support ${req.user}`);
       return next(createError(401, "You are not authenticated! in Support"));
     }
 
@@ -49,7 +50,7 @@ const verifyAdmin = (req, res, next) => {
 
     // Check if the user has the necessary role (admin)
     if (req.user.role !== "admin") {
-      console.log(req.user.role);
+      console.log(`O verify admin ${req.user}`);
       return next(createError(401, "You are not authenticated! in Admin"));
     }
 
