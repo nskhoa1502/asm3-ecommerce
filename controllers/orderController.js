@@ -16,39 +16,39 @@ const transporter = nodemailer.createTransport({
 
 // CREATE ORDER
 exports.postOrder = async (req, res, next) => {
-  const { userId, cartId, fullName, email, phoneNumber, address, totalAmount } =
-    req.body;
+  const {
+    userId,
+    products,
+    fullName,
+    email,
+    phoneNumber,
+    address,
+    totalAmount,
+  } = req.body;
   try {
-    // Retrieve the cart and populate the necessary fields
-    const cart = await Cart.findById(cartId).populate({
-      path: "products.productId",
-      select: "category img1 name price",
-    });
-
-    // Calculate the total price based on the cart's products
+    // Calculate the total price based on the products
     let totalPrice = 0;
-    const productsTable = cart.products.map((product) => {
+    let totalQuantity = 0;
+    const productsTable = products.map((product) => {
       const { productId, quantity } = product;
       const { name, img1, price } = productId;
       const totalProductPrice = quantity * price;
       totalPrice += totalProductPrice;
+      totalQuantity += quantity;
 
       // Mail Content
       return `
-          <tr>
-            <td>${name}</td>
-            <td><img src="${img1}" alt="${name}" height="50"></td>
-            <td>${formatNumber(+price)} VND</td>
-            <td>${quantity}</td>
-            <td>${formatNumber(+totalProductPrice)} VND</td>
-          </tr>
-        `;
+        <tr>
+          <td>${name}</td>
+          <td><img src="${img1}" alt="${name}" height="50"></td>
+          <td>${formatNumber(+price)} VND</td>
+          <td>${quantity}</td>
+          <td>${formatNumber(+totalProductPrice)} VND</td>
+        </tr>
+      `;
     });
 
-    // console.log(totalAmount);
-    // console.log(totalPrice);
-
-    // Compare totalPrice from frontend to backend
+    // Compare totalAmount from frontend to totalPrice from backend
     if (totalAmount !== totalPrice) {
       return next(createError(500, "Something went wrong"));
     }
@@ -56,7 +56,7 @@ exports.postOrder = async (req, res, next) => {
     // Create the order
     const newOrder = new Order({
       userId,
-      cartId,
+      products,
       totalPrice,
       fullName,
       email,
@@ -116,24 +116,11 @@ exports.getUserOrder = async (req, res, next) => {
   const userId = req.params.userId;
 
   try {
-    const order = await Order.find({ userId: userId })
-      .populate({ path: "userId", select: "fullname email phone" }) // Populate selected fields of the 'userId' field
-      .populate({
-        path: "cartId",
-
-        populate: {
-          path: "products",
-          select: "quantity",
-          populate: {
-            path: "productId",
-            model: "Product",
-            select: "name img1 price",
-          },
-        },
-        select: "totalQuantity",
-      });
-
-    res.status(200).json(order);
+    const orders = await Order.find({ userId: userId }).populate({
+      path: "products.productId",
+      select: "img1 name price",
+    });
+    res.status(200).json(orders);
   } catch (err) {
     next(err);
   }
