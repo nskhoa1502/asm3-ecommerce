@@ -70,8 +70,8 @@ exports.postLogin = async (req, res, next) => {
     res
       .cookie("access_token", accessToken, {
         httpOnly: true,
-        // sameSite: "none",
-        secure: true,
+        sameSite: "lax",
+        // secure: true,
         // other options
       })
       .status(200)
