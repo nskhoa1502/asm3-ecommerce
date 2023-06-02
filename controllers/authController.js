@@ -91,14 +91,14 @@ exports.postLogout = async (req, res, next) => {
         domain: "asm3-ecommerce-khoa.netlify.app",
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
       })
       .clearCookie("access_token", {
         path: "/",
         domain: "asm3-adminecommerce-khoa.netlify.app",
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
       })
       .status(200)
       .json({ message: "User logged out successfully" });
